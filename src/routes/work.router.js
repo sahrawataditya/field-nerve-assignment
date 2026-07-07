@@ -1,6 +1,6 @@
 import express from 'express'
-import { getAllVendors } from '../controllers/vendor.controller'
-import { createWork, getAllWorks, getWorkById, updateWork, workRecommendation } from '../controllers/work.controller'
+import { getAllVendors } from '../controllers/vendor.controller.js'
+import { createWork, getAllWorks, getWorkById, updateWork, workRecommendation } from '../controllers/work.controller.js'
 
 const router = express.Router()
 
