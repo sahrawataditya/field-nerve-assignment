@@ -331,6 +331,12 @@ export const deleteVendor = async (req, res) => {
                 id
             },
         })
+
+        await prisma.document.deleteMany({
+            where: {
+                vendorId: id
+            }
+        })
         return res.status(200).json({
             messsage: "vendor deleted successfully !",
             success: true,
@@ -367,8 +373,9 @@ export const deleteVendors = async (req, res) => {
                 success: false
             })
         }
-
         await prisma.vendor.deleteMany()
+
+        await prisma.document.deleteMany()
 
         return res.status(200).json({
             messsage: "vendors deleted successfully !",
