@@ -12,6 +12,8 @@ RESTful API for managing vendors, works, and document uploads with Cloudinary in
 - **Part 1** — [https://www.loom.com/share/ab479a1abe644e629a703a97fb9dd5ae](https://www.loom.com/share/ab479a1abe644e629a703a97fb9dd5ae)
 - **Part 2** — [https://www.loom.com/share/61a490c5cc734a0b811dbd32bfdd9b95](https://www.loom.com/share/61a490c5cc734a0b811dbd32bfdd9b95)
 
+Caution : Deployed on Free instance of render so its will have a cold start 1-2 mins 
+
 ## Project Architecture
 
 ```
