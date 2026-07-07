@@ -8,6 +8,12 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Status {
+  free
+  open
+  close
+}
+
 model Vendor {
   id                 String     @id @default(uuid())
   name               String
@@ -15,7 +21,7 @@ model Vendor {
   vendor_type        String?
   category           String?
   operating_location String?
-  status             String     @default("free")
+  status             Status     @default(free)
   rating             Int        @default(0)
   documents          Document[]
   createdAt          DateTime   @default(now())

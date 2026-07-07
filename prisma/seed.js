@@ -54,8 +54,8 @@ function generateVendors(count) {
       operating_location: pick(LOCATIONS),
       status: pickWeighted([
         { value: 'free', weight: 0.7 },
-        { value: 'premium', weight: 0.2 },
-        { value: 'verified', weight: 0.1 },
+        { value: 'open', weight: 0.2 },
+        { value: 'close', weight: 0.1 },
       ]),
       rating: Math.floor(Math.random() * 6),
     })
