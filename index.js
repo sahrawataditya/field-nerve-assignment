@@ -1,14 +1,17 @@
 import express from 'express'
 import cors from 'cors'
 import router from './src/routes'
+import morgan from 'morgan'
 
 const app = express()
 //Using express express json to use json from request body
 app.use(express.json())
 //Enabling cors for Cross origins 
 app.use(cors({
-    origin: process.env.NODE_ENV !== "development" ? "" : "*",
+    origin: process.env?.NODE_ENV.trim().toLowerCase() !== "development" ? "" : "*",
 }))
+//Logging
+app.use(morgan(process.env?.NODE_ENV.trim().toLowerCase() !== "development" ? "" : "dev"))
 //Enabling router in the app middleware
 app.use("/api", router)
 

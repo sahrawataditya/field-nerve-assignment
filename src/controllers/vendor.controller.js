@@ -3,7 +3,7 @@ import prisma from "../lib/prisma"
 //Create vendor 
 export const createVendor = async (req, res) => {
     const { name, email, category, operating_location, status, rating, vendor_type } = req.body
-    if (!name || email) {
+    if (!name || !email) {
         return res.status(400).json({ error: "missing fields!" })
     }
     try {
@@ -14,7 +14,7 @@ export const createVendor = async (req, res) => {
         })
 
         if (vendor) {
-            return res.status(404).json({
+            return res.status(400).json({
                 error: "vendor already exists!",
                 success: false
             })
@@ -33,7 +33,6 @@ export const createVendor = async (req, res) => {
         return res.status(200).json({
             messsage: "vendor created successfully !",
             success: true,
-            data: vendor
         })
     } catch (error) {
         console.error(error)
