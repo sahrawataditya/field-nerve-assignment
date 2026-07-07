@@ -1,0 +1,23 @@
+generator client {
+  provider   = "prisma-client"
+  output     = "../generated/prisma"
+  engineType = "client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Vendor {
+  id                 String   @id @default(uuid())
+  name               String?
+  email              String   @unique
+  mobile_no          String?  @unique
+  vendor_type        String
+  category           String
+  operating_location String
+  status             String   @default("free")
+  rating             Int      @default(0)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
