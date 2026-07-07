@@ -9,23 +9,27 @@ RESTful API for managing vendors, works, and document uploads with Cloudinary in
 - pnpm
 
 ## Setup
+*use any package managers (npm / yarn / pnpm)
 
 ```bash
-# 1. Clone and install dependencies (npm / yarn / pnpm)
+# 1. Clone the repo
+git clone https://github.com/sahrawataditya/field-nerve-assignment.git
+
+# 2. Install dependencies 
 pnpm install
 
-# 2. Copy environment variables
+# 3. Copy environment variables
 cp .env.example .env.local
 
-# 3. Configure your .env.local with database and Cloudinary credentials
+# 4. Configure your .env.local with database and Cloudinary credentials
 
-# 4. Run database migrations
+# 5. Run database migrations
 pnpm run db:migrate
 
-# 5. Generate Prisma Client
+# 6. Generate Prisma Client
 pnpm run db:generate
 
-# 6. Start development server
+# 7. Start development server
 pnpm dev
 ```
 
