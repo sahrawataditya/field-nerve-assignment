@@ -1,0 +1,97 @@
+import prisma from '../lib/prisma'
+import { uploadToCloudinary } from '../lib/cloudinary'
+
+/**
+ * @swagger
+ * /api/document/upload/{vendorId}:
+ *   post:
+ *     summary: Upload documents for a vendor
+ *     tags: [Documents]
+ *     parameters:
+ *       - in: path
+ *         name: vendorId
+ *         required: true
+ *         schema: { type: string }
+ *         description: Vendor ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             required: [name, documents]
+ *             properties:
+ *               name: { type: string, description: Document name/title }
+ *               documents:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: binary
+ *     responses:
+ *       201:
+ *         description: Documents uploaded successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message: { type: string }
+ *                 success: { type: boolean, enum: [true] }
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Document'
+ *       400:
+ *         description: Missing fields or files
+ *       404:
+ *         description: Vendor not found
+ */
+export const uploadDocuments = async (req, res) => {
+  try {
+    const { vendorId } = req?.params
+    const { name } = req?.body
+    const files = req.files
+
+    if (!name) {
+      return res.status(400).json({ error: 'No Document name provided', success: false })
+
+    }
+    if (!files || files.length === 0) {
+      return res.status(400).json({ error: 'No files provided', success: false })
+    }
+
+    if (!vendorId) {
+      return res.status(400).json({ error: 'Vendor ID is required', success: false })
+    }
+    const vendor = await prisma.vendor.findUnique({ where: { id: vendorId } })
+    if (!vendor) {
+      return res.status(404).json({ error: 'Vendor not found', success: false })
+    }
+
+    const uploadResults = await Promise.all(
+      files.map(async (file) => {
+        const result = await uploadToCloudinary(file.buffer, {
+          public_id: file.originalname.replace(/\.[^/.]+$/, ''),
+          resource_type: 'raw',
+        })
+
+        return prisma.document.create({
+          data: {
+            name,
+            doc_url: result.secure_url,
+            vendorId,
+          },
+        })
+      }),
+    )
+
+    return res.status(201).json({
+      message: 'Documents uploaded successfully',
+      success: true,
+      data: uploadResults,
+    })
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json({ error: 'Internal Server Error', success: false })
+  }
+}
