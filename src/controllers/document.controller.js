@@ -1,5 +1,5 @@
-import prisma from '../lib/prisma'
-import { uploadToCloudinary } from '../lib/cloudinary'
+import prisma from '../lib/prisma/index.js'
+import { uploadToCloudinary } from '../lib/cloudinary/index.js'
 
 /**
  * @swagger
