@@ -11,7 +11,7 @@ RESTful API for managing vendors, works, and document uploads with Cloudinary in
 ## Setup
 
 ```bash
-# 1. Clone and install dependencies
+# 1. Clone and install dependencies (npm / yarn / pnpm)
 pnpm install
 
 # 2. Copy environment variables
