@@ -6,13 +6,13 @@
   "type": "module",
   "scripts": {
     "prestart": "npm run db:generate",
-    "dev": "tsx watch --env-file=.env.local index.js",
-    "start": "tsx --env-file=.env index.js",
+    "dev": "node --env-file=.env.local index.js",
+    "start": "node --env-file=.env index.js",
     "db:migrate": "prisma migrate dev",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
     "db:generate": "prisma generate",
-    "db:seed": "tsx --env-file=.env.local prisma/seed.js"
+    "db:seed": "node --env-file=.env.local prisma/seed.js"
   },
   "keywords": [],
   "author": "",

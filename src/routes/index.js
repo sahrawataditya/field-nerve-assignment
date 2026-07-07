@@ -1,7 +1,7 @@
 import express from 'express'
-import vendorRouter from './vendor.router'
-import documentRouter from './document.router'
-import workRouter from './work.router'
+import vendorRouter from './vendor.router.js'
+import documentRouter from './document.router.js'
+import workRouter from './work.router.js'
 
 const router = express.Router()
 

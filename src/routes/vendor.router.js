@@ -1,5 +1,5 @@
 import express from 'express'
-import { createVendor, deleteVendor, deleteVendors, getAllVendors, getVendorById, getVendorDocsById, updateVendor } from '../controllers/vendor.controller'
+import { createVendor, deleteVendor, deleteVendors, getAllVendors, getVendorById, getVendorDocsById, updateVendor } from '../controllers/vendor.controller.js'
 
 const router = express.Router()
 

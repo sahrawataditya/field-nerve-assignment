@@ -1,10 +1,10 @@
 import express from 'express'
 import cors from 'cors'
 import swaggerUi from 'swagger-ui-express'
-import router from './src/routes'
-import { swaggerSpec } from './src/swagger'
+import router from './src/routes/index.js'
+import { swaggerSpec } from './src/swagger.js'
 import morgan from 'morgan'
-import prisma from './src/lib/prisma'
+import prisma from './src/lib/prisma/index.js'
 
 const app = express()
 //Using express express json to use json from request body
