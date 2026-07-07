@@ -1,11 +1,25 @@
 import express from 'express'
+import cors from 'cors'
+import router from './src/routes'
 
 const app = express()
+//Using express express json to use json from request body
+app.use(express.json())
+//Enabling cors for Cross origins 
+app.use(cors({
+    origin: process.env.NODE_ENV !== "development" ? "" : "*",
+}))
+//Enabling router in the app middleware
+app.use("/api", router)
 
 app.get("/health", (req, res) => {
-    return res.status(200).json({ message: "Server is running !" })
+    return res.status(200).json({
+        message: "Server is running !",
+        success: true
+    })
 })
 
+//Application listening
 app.listen(3030, () => {
     console.log("Server is listening on port 3030")
 })
