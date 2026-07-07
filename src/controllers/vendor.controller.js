@@ -1,5 +1,43 @@
 import prisma from "../lib/prisma"
 
+/**
+ * @swagger
+ * /api/vendor/create:
+ *   post:
+ *     summary: Create a new vendor
+ *     tags: [Vendors]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [name, email]
+ *             properties:
+ *               name: { type: string }
+ *               email: { type: string, format: email }
+ *               category: { type: string, enum: [technology, healthcare, education, finance, retail, logistics] }
+ *               operating_location: { type: string }
+ *               status: { type: string, enum: [free, open, close] }
+ *               rating: { type: integer, minimum: 0, maximum: 10 }
+ *               vendor_type: { type: string }
+ *     responses:
+ *       200:
+ *         description: Vendor created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 messsage: { type: string }
+ *                 success: { type: boolean, enum: [true] }
+ *       400:
+ *         description: Missing fields or vendor already exists
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
 //Create vendor 
 export const createVendor = async (req, res) => {
     const { name, email, category, operating_location, status, rating, vendor_type } = req.body
@@ -42,6 +80,29 @@ export const createVendor = async (req, res) => {
         })
     }
 }
+/**
+ * @swagger
+ * /api/vendor:
+ *   get:
+ *     summary: Get all vendors
+ *     tags: [Vendors]
+ *     responses:
+ *       200:
+ *         description: List of vendors
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 messsage: { type: string }
+ *                 success: { type: boolean, enum: [true] }
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Vendor'
+ *       404:
+ *         description: No vendors found
+ */
 //get all vendors 
 export const getAllVendors = async (req, res) => {
     try {
@@ -67,6 +128,33 @@ export const getAllVendors = async (req, res) => {
         })
     }
 }
+/**
+ * @swagger
+ * /api/vendor/{id}:
+ *   get:
+ *     summary: Get a vendor by ID
+ *     tags: [Vendors]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *         description: Vendor ID
+ *     responses:
+ *       200:
+ *         description: Vendor found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 messsage: { type: string }
+ *                 success: { type: boolean, enum: [true] }
+ *                 data:
+ *                   $ref: '#/components/schemas/Vendor'
+ *       404:
+ *         description: Vendor not found
+ */
 //get signle vendor 
 export const getVendorById = async (req, res) => {
     try {
@@ -106,6 +194,39 @@ export const getVendorById = async (req, res) => {
         })
     }
 }
+/**
+ * @swagger
+ * /api/vendor/update/{id}:
+ *   put:
+ *     summary: Update a vendor by ID
+ *     tags: [Vendors]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *         description: Vendor ID
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name: { type: string }
+ *               email: { type: string, format: email }
+ *               category: { type: string, enum: [technology, healthcare, education, finance, retail, logistics] }
+ *               operating_location: { type: string }
+ *               status: { type: string, enum: [free, open, close] }
+ *               rating: { type: integer, minimum: 0, maximum: 10 }
+ *               vendor_type: { type: string }
+ *     responses:
+ *       200:
+ *         description: Vendor updated
+ *       400:
+ *         description: Missing ID
+ *       404:
+ *         description: Vendor not found
+ */
 //update vendor by id 
 export const updateVendor = async (req, res) => {
 
@@ -160,6 +281,24 @@ export const updateVendor = async (req, res) => {
         })
     }
 }
+/**
+ * @swagger
+ * /api/vendor/delete/{id}:
+ *   delete:
+ *     summary: Delete a vendor by ID
+ *     tags: [Vendors]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *         description: Vendor ID
+ *     responses:
+ *       200:
+ *         description: Vendor deleted
+ *       404:
+ *         description: Vendor not found
+ */
 //delete vendor by id 
 export const deleteVendor = async (req, res) => {
 
@@ -204,6 +343,18 @@ export const deleteVendor = async (req, res) => {
         })
     }
 }
+/**
+ * @swagger
+ * /api/vendor/delete-all:
+ *   delete:
+ *     summary: Delete all vendors
+ *     tags: [Vendors]
+ *     responses:
+ *       200:
+ *         description: All vendors deleted
+ *       404:
+ *         description: No vendors found
+ */
 //delete all vendors 
 export const deleteVendors = async (req, res) => {
 
@@ -231,6 +382,38 @@ export const deleteVendors = async (req, res) => {
         })
     }
 }
+/**
+ * @swagger
+ * /api/vendor/docs/{id}:
+ *   get:
+ *     summary: Get all documents for a vendor
+ *     tags: [Vendors]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *         description: Vendor ID
+ *     responses:
+ *       200:
+ *         description: Vendor documents found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 messsage: { type: string }
+ *                 success: { type: boolean, enum: [true] }
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       doc_url: { type: string, format: uri }
+ *                       name: { type: string }
+ *       404:
+ *         description: Vendor or documents not found
+ */
 //get all vendors docs by vendor id 
 export const getVendorDocsById = async (req, res) => {
     try {

@@ -1,6 +1,8 @@
 import express from 'express'
 import cors from 'cors'
+import swaggerUi from 'swagger-ui-express'
 import router from './src/routes'
+import { swaggerSpec } from './src/swagger'
 import morgan from 'morgan'
 
 const app = express()
@@ -8,10 +10,15 @@ const app = express()
 app.use(express.json())
 //Enabling cors for Cross origins 
 app.use(cors({
-    origin: process.env?.NODE_ENV.trim().toLowerCase() !== "development" ? "" : "*",
+    origin: "*",
 }))
 //Logging
 app.use(morgan(process.env?.NODE_ENV.trim().toLowerCase() !== "development" ? "" : "dev"))
+//Swagger API documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+    customCss: '.swagger-ui .topbar { display: none }',
+    customSiteTitle: 'Field Nerve API Docs',
+}))
 //Enabling router in the app middleware
 app.use("/api", router)
 

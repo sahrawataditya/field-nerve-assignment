@@ -1,6 +1,51 @@
 import prisma from '../lib/prisma'
 import { uploadToCloudinary } from '../lib/cloudinary'
 
+/**
+ * @swagger
+ * /api/document/upload/{vendorId}:
+ *   post:
+ *     summary: Upload documents for a vendor
+ *     tags: [Documents]
+ *     parameters:
+ *       - in: path
+ *         name: vendorId
+ *         required: true
+ *         schema: { type: string }
+ *         description: Vendor ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             required: [name, documents]
+ *             properties:
+ *               name: { type: string, description: Document name/title }
+ *               documents:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: binary
+ *     responses:
+ *       201:
+ *         description: Documents uploaded successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message: { type: string }
+ *                 success: { type: boolean, enum: [true] }
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Document'
+ *       400:
+ *         description: Missing fields or files
+ *       404:
+ *         description: Vendor not found
+ */
 export const uploadDocuments = async (req, res) => {
   try {
     const { vendorId } = req?.params

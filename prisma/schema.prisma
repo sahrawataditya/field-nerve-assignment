@@ -14,12 +14,21 @@ enum Status {
   close
 }
 
+enum Categories {
+  technology
+  healthcare
+  education
+  finance
+  retail
+  logistics
+}
+
 model Vendor {
   id                 String     @id @default(uuid())
   name               String
   email              String     @unique
   vendor_type        String?
-  category           String?
+  category           Categories @default(technology)
   operating_location String?
   status             Status     @default(free)
   rating             Int        @default(0)
@@ -36,4 +45,14 @@ model Document {
   updatedAt DateTime @updatedAt
   vendor    Vendor?  @relation(fields: [vendorId], references: [id])
   vendorId  String?
+}
+
+model Work {
+  id              String     @id @default(uuid())
+  title           String
+  category        Categories @default(technology)
+  location        String
+  estimated_value String?
+  priority        Int        @default(1)
+  expecetedDate   DateTime?  @map("exp_start_date")
 }
