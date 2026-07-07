@@ -9,15 +9,26 @@ datasource db {
 }
 
 model Vendor {
-  id                 String   @id @default(uuid())
+  id                 String     @id @default(uuid())
   name               String?
-  email              String   @unique
-  mobile_no          String?  @unique
+  email              String     @unique
+  mobile_no          String?    @unique
   vendor_type        String
   category           String
   operating_location String
-  status             String   @default("free")
-  rating             Int      @default(0)
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  status             String     @default("free")
+  rating             Int        @default(0)
+  documents          Document[]
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+}
+
+model Document {
+  id        String   @id @default(uuid())
+  name      String
+  doc_url   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  vendor    Vendor?  @relation(fields: [vendorId], references: [id])
+  vendorId  String?
 }
