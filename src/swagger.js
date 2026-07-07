@@ -8,7 +8,9 @@ const options = {
       version: '1.0.0',
       description: 'API for managing vendors, works, and document uploads',
     },
-    servers: [{ url: 'http://localhost:3030', description: 'Development' }],
+    servers: [{
+      url: "https://field-nerve-assignment.onrender.com", description: "Production"
+    }, { url: 'http://localhost:3030', description: 'Development' },],
     components: {
       schemas: {
         Vendor: {
